@@ -1,0 +1,43 @@
+body {
+  font-family: "Open Sans", sans-serif;
+  font-size: 16px;
+}
+
+.swim-lanes {
+  min-height: 60vh;
+}
+
+.task-card {
+  margin: 0 auto;
+}
+
+.task-card:hover {
+  cursor: grab;
+}
+
+.task-card {
+  /* background-color: rgb(255, 0, 0); */
+  border: 2px solid black;
+  border-radius: 25px;
+  border: 1px solid;
+  padding: 10px;
+  box-shadow: 5px 10px;
+}
+
+#taskTitle,
+#taskDescription {
+  height: 60px;
+  width: 400px;
+}
+
+.delete {
+  font-family: "Open Sans", sans-serif;
+}
+
+.overdue {
+  background-color: rgb(255, 0, 0);
+}
+
+.in-progress {
+  background-color: yellow;
+}
