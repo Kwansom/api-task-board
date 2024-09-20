@@ -41,3 +41,8 @@ body {
 .in-progress {
   background-color: yellow;
 }
+
+.task-done {
+  background-color: green;
+  color: white;
+}

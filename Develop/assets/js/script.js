@@ -77,6 +77,11 @@ function renderTaskList() {
     const card = $("<div></div>")
       .addClass("task-card draggable")
       .attr("data-id", tasks[i].id); //add draggable class to card
+
+    if (tasks[i].status === "done") {
+      card.addClass("task-done"); // Add the done class if the task is done
+    }
+
     const title = $("<h4>");
     const description = $("<p>");
     const due = $("<p>");
