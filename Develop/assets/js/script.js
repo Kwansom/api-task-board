@@ -7,6 +7,7 @@ let taskId = 0; // Declaring taskiD outside of the function so it maintains its 
 function generateTaskId() {
   // Check if nextId exists, if not, initialize it to 1.
   // Increment nextId for each new task
+  // return ++taskId;
   if (!taskId) {
     taskId = 1;
   } else {
@@ -23,6 +24,20 @@ function handleAddTask(event) {
   const taskTitle = document.getElementById("taskTitle").value;
   const taskDes = document.getElementById("taskDescription").value;
   const taskDue = document.getElementById("taskDueDate").value;
+
+  // alert if value inputs are empty in modal form
+  if (!taskTitle) {
+    alert("Please add a title to your task.");
+    return;
+  }
+  if (!taskDes) {
+    alert("Please add a description for your task.");
+    return;
+  }
+  if (!taskDue) {
+    alert("Please add a due date for your task.");
+    return;
+  }
 
   // new task object to store values in an array
   const newTask = {
@@ -55,6 +70,8 @@ function handleDeleteTask(event) {
 function renderTaskList() {
   const tasks = JSON.parse(localStorage.getItem("tasks")) || [];
   $("#todo-cards").empty();
+  $("#in-progress-cards").empty();
+  $("#done-cards").empty();
   const today = dayjs(); // Get the current date using Day.js
   for (let i = 0; i < tasks.length; i++) {
     const card = $("<div></div>")
@@ -113,15 +130,32 @@ function handleDrop(event, ui) {
   const droppedItemId = ui.draggable[0].dataset.id; // id of dropped task
   // get task out, find by id, update which lane it is
   const tasks = JSON.parse(localStorage.getItem("tasks"));
+  let currentTask;
 
   for (let i = 0; i < tasks.length; i++) {
-    // looking for task via id
     if (droppedItemId == tasks[i].id) {
-      tasks[i].status = event.target.id;
+      currentTask = tasks[i];
+      break; // Exit loop once the task is found
     }
   }
-  localStorage.setItem("tasks", JSON.stringify(tasks));
-  renderTaskList();
+
+  // Check if the task was found
+  if (currentTask) {
+    // Update the task's status
+    currentTask.status = event.target.id;
+
+    // Update localStorage
+    localStorage.setItem("tasks", JSON.stringify(tasks));
+
+    // Clear previous lane
+    $(`#${currentTask.status}-cards`).empty();
+
+    // Re-render the task list to display it in the new lane
+    renderTaskList();
+  }
+
+  // localStorage.setItem("tasks", JSON.stringify(tasks));
+  // renderTaskList();
 
   console.log(event.target.id);
   console.log(ui);
